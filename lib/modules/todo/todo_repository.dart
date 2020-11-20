@@ -34,7 +34,7 @@ class TodoRepositoryImpl implements TodoRepository {
   @override
   Future<void> saveTodos(List<Todo> todos) async {
     final prefs = read(sharedPreferencesClient);
-    await prefs.saveJson(
+    await prefs.saveJsonList(
       key: _todoKey,
       json: todos.map((todo) => todo.toJson()).toList(),
     );
@@ -43,7 +43,10 @@ class TodoRepositoryImpl implements TodoRepository {
   @override
   Future<SortOrder> getSortOrder() async {
     final prefs = read(sharedPreferencesClient);
-    final String sortOrder = await prefs.getString(key: _sortOrder);
+    final String sortOrder = await prefs.getString(
+          key: _sortOrder,
+        ) ??
+        SortOrder.asc.toString();
     return SortOrder.values.firstWhere((e) => e.toString() == sortOrder);
   }
 

@@ -14,7 +14,7 @@ class SharedPreferencesClient {
     );
   }
 
-  Future<void> saveJson({
+  Future<void> saveJsonList({
     @required String key,
     @required List<Map<String, dynamic>> json,
   }) async {
@@ -25,6 +25,11 @@ class SharedPreferencesClient {
   Future<String> getString({@required String key}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
+  }
+
+  Future<bool> deleteString({@required String key}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.remove(key);
   }
 
   Future<void> saveString({

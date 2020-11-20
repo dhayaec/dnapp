@@ -33,6 +33,7 @@ class TodosViewController {
 
   Future initState() async {
     read(_todos).state = await read(todoRepository).getTodos();
+    read(_sortOrder).state = await read(todoRepository).getSortOrder();
   }
 
   void dispose() {
@@ -71,11 +72,9 @@ class TodosViewController {
   }
 
   Future<void> changeSortOrder() async {
-    final SortOrder sortOrder = read(_sortOrder).state;
-    await read(todoRepository).saveSortOrder(
-      sortOrder == SortOrder.asc ? SortOrder.desc : SortOrder.asc,
-    );
-    final order = await read(todoRepository).getSortOrder();
-    read(_sortOrder).state = order;
+    final SortOrder order = read(_sortOrder).state;
+    final updated = order == SortOrder.asc ? SortOrder.desc : SortOrder.asc;
+    await read(todoRepository).saveSortOrder(updated);
+    read(_sortOrder).state = updated;
   }
 }
