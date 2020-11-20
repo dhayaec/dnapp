@@ -32,7 +32,12 @@ class TodoList extends HookWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              TextField(controller: textController),
+              TextField(
+                controller: textController,
+                onSubmitted: (value) {
+                  context.read(todosViewController).addTodo(textController);
+                },
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

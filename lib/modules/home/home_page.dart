@@ -1,4 +1,5 @@
 import 'package:dnapp/modules/home/counter_provider.dart';
+import 'package:dnapp/modules/product/product_page.dart';
 import 'package:dnapp/modules/todo/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,9 +24,17 @@ class HomePage extends HookWidget {
       appBar: AppBar(
         title: title.text.make(),
       ),
-      body: Center(
-        child: countValue,
-      ),
+      body: VStack(
+        [
+          countValue.centered(),
+          RaisedButton(
+            onPressed: () => context.nextPage(
+              const ProductPage(productId: 1),
+            ),
+            child: "Products".text.make(),
+          ).centered()
+        ],
+      ).centered(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.nextPage(TodoList()),
         child: const Icon(Icons.skip_next),

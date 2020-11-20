@@ -70,9 +70,12 @@ class TodosViewController {
     read(_todos).state = todos;
   }
 
-  void changeSortOrder() {
+  Future<void> changeSortOrder() async {
     final SortOrder sortOrder = read(_sortOrder).state;
-    read(_sortOrder).state =
-        sortOrder == SortOrder.asc ? SortOrder.desc : SortOrder.asc;
+    await read(todoRepository).saveSortOrder(
+      sortOrder == SortOrder.asc ? SortOrder.desc : SortOrder.asc,
+    );
+    final order = await read(todoRepository).getSortOrder();
+    read(_sortOrder).state = order;
   }
 }

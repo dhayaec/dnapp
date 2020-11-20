@@ -1,20 +1,37 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesClient = Provider((ref) => SharedPreferencesClient());
 
 class SharedPreferencesClient {
-  Future<List<Map<String, dynamic>>> getJsonList(String key) async {
+  Future<List<Map<String, dynamic>>> getJsonList({@required String key}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return List<Map<String, dynamic>>.from(
       jsonDecode(prefs.getString(key) ?? '[]') as List,
     );
   }
 
-  Future<void> saveJson(String key, List<Map<String, dynamic>> json) async {
+  Future<void> saveJson({
+    @required String key,
+    @required List<Map<String, dynamic>> json,
+  }) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, jsonEncode(json));
+  }
+
+  Future<String> getString({@required String key}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
+  }
+
+  Future<void> saveString({
+    @required String key,
+    @required String value,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, value);
   }
 }

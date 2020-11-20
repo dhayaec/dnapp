@@ -12,7 +12,7 @@ class TodoItem extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final todo = useProvider(currentTodo);
-    debugPrint(todo.title);
+    // debugPrint(todo.title);
     return Card(
       child: Dismissible(
         key: Key(todo.id.toString()),
