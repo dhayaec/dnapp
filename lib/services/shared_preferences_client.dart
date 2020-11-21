@@ -14,6 +14,21 @@ class SharedPreferencesClient {
     );
   }
 
+  Future<Map<String, dynamic>> getJsonMap({@required String key}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return Map<String, dynamic>.from(
+      jsonDecode(prefs.getString(key) ?? '{}') as Map,
+    );
+  }
+
+  Future<void> saveJsonMap({
+    @required String key,
+    @required Map<String, dynamic> json,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, jsonEncode(json));
+  }
+
   Future<void> saveJsonList({
     @required String key,
     @required List<Map<String, dynamic>> json,
@@ -27,7 +42,7 @@ class SharedPreferencesClient {
     return prefs.getString(key);
   }
 
-  Future<bool> deleteString({@required String key}) async {
+  Future<bool> delete({@required String key}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.remove(key);
   }
